@@ -75,11 +75,15 @@ class CpuPlatform(Platform):
     def supported_dtypes(self) -> list[torch.dtype]:
         if self.get_cpu_architecture() == CpuArchEnum.POWERPC:
             return [torch.bfloat16, torch.float32]
-        elif (self.get_cpu_architecture() == CpuArchEnum.ARM
-              and sys.platform.startswith("darwin")):
-            if (subprocess.check_output(
-                ["sysctl -n hw.optional.arm.FEAT_BF16"],
-                    shell=True).strip() == b"1"):
+        elif self.get_cpu_architecture() == CpuArchEnum.ARM and sys.platform.startswith(
+            "darwin"
+        ):
+            if (
+                subprocess.check_output(
+                    ["sysctl", "-n", "hw.optional.arm.FEAT_BF16"]
+                ).strip()
+                == b"1"
+            ):
                 return [torch.bfloat16, torch.float16, torch.float32]
             return [torch.float16, torch.float32]
         # x86/aarch64 CPU has supported both bf16 and fp16 natively.
@@ -278,9 +282,9 @@ class CpuPlatform(Platform):
         assert platform.system() == "Linux"
 
         # Init LogicalCPUInfo from lscpu
-        lscpu_output = subprocess.check_output("lscpu -J -e=CPU,CORE,NODE",
-                                               shell=True,
-                                               text=True)
+        lscpu_output = subprocess.check_output(
+            ["lscpu", "-J", "-e=CPU,CORE,NODE"],  text=True
+        )
         logical_cpu_list: list[LogicalCPUInfo] = json.loads(
             lscpu_output, object_hook=LogicalCPUInfo.json_decoder)['cpus']
 

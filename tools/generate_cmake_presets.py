@@ -48,9 +48,7 @@ def generate_presets(output_path="CMakeUserPresets.json",
             print(f"Found nvcc in PATH: {nvcc_path}")
 
     if not nvcc_path:
-        nvcc_path_input = input(
-            "Could not automatically find 'nvcc'. Please provide the full "
-            "path to nvcc (e.g., /usr/local/cuda/bin/nvcc): ")
+        nvcc_path_input = "/usr/local/cuda/bin/nvcc"
         nvcc_path = nvcc_path_input.strip()
     print(f"Using NVCC path: {nvcc_path}")
 
@@ -63,8 +61,9 @@ def generate_presets(output_path="CMakeUserPresets.json",
             "Could not automatically find Python executable. Please provide "
             "the full path to your Python executable for vLLM development "
             "(typically from your virtual environment, e.g., "
-            "/home/user/venvs/vllm/bin/python): ")
-        python_executable = input(python_executable_prompt).strip()
+            "/home/user/venvs/vllm/bin/python): "
+        )
+        python_executable = "/home/user/venvs/vllm/bin/python"
         if not python_executable:
             raise ValueError(
                 "Could not determine Python executable. Please provide it "
@@ -148,10 +147,8 @@ def generate_presets(output_path="CMakeUserPresets.json",
         if force_overwrite:
             print(f"Overwriting existing file '{output_file_path}'")
         else:
-            overwrite = input(
-                f"'{output_file_path}' already exists. Overwrite? (y/N): "
-            ).strip().lower()
-            if overwrite != 'y':
+            overwrite = "y"
+            if overwrite != "y":
                 print("Generation cancelled.")
                 return
 

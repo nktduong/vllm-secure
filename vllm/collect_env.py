@@ -98,10 +98,9 @@ def run(command):
     """Return (return-code, stdout, stderr)."""
     shell = True if type(command) is str else False
     try:
-        p = subprocess.Popen(command,
-                             stdout=subprocess.PIPE,
-                             stderr=subprocess.PIPE,
-                             shell=shell)
+        p = subprocess.Popen(
+            command.split() if shell else command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
         raw_output, raw_err = p.communicate()
         rc = p.returncode
         if get_platform() == 'win32':

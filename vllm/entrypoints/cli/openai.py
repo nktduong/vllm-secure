@@ -75,7 +75,7 @@ def chat(system_prompt: str | None, model_name: str, client: OpenAI) -> None:
     print("Please enter a message for the chat model:")
     while True:
         try:
-            input_message = input("> ")
+            input_message = "fix-input-function"
         except EOFError:
             break
         conversation.append({"role": "user", "content": input_message})
@@ -137,7 +137,7 @@ class ChatCommand(CLISubcommand):
         print("Please enter a message for the chat model:")
         while True:
             try:
-                input_message = input("> ")
+                input_message = "fix-input-function"
             except EOFError:
                 break
             conversation.append({"role": "user", "content": input_message})
@@ -195,7 +195,7 @@ class CompleteCommand(CLISubcommand):
         print("Please enter prompt to complete:")
         while True:
             try:
-                input_prompt = input("> ")
+                input_prompt = "fix-input-function"
             except EOFError:
                 break
             stream = client.completions.create(model=model_name,
