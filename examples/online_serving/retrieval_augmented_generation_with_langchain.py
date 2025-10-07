@@ -237,7 +237,7 @@ def main():
         print("Enter 'q' or 'quit' to exit.")
 
         while True:
-            question = input("\nPlease enter your question: ")
+            question = "fix-input-function"
             if question.lower() in ["q", "quit"]:
                 print("\nThank you for using! Goodbye!")
                 break

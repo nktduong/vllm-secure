@@ -102,7 +102,7 @@ def run(command):
     shell = True if type(command) is str else False
     try:
         p = subprocess.Popen(
-            command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=shell
+            command.split() if shell else command, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         )
         raw_output, raw_err = p.communicate()
         rc = p.returncode
