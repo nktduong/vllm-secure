@@ -198,7 +198,7 @@ def main():
         print("\nEntering interactive mode. Type 'quit' to exit.")
         while True:
             # Get user question
-            question = input("\nEnter your question: ")
+            question = "fix-input-function"
 
             # Check for exit command
             if question.lower() in ["quit", "exit", "q"]:
