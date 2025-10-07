@@ -483,7 +483,6 @@ def get_gaudi_sw_version():
     """
     # Enable console printing for `hl-smi` check
     output = subprocess.run("hl-smi",
-                            shell=True,
                             text=True,
                             capture_output=True,
                             env={"ENABLE_CONSOLE": "true"})

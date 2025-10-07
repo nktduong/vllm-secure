@@ -122,3 +122,5 @@ cd DeepEP
 export NVSHMEM_DIR=$WORKSPACE/nvshmem_install
 PIP_NO_BUILD_ISOLATION=0 pip install -vvv -e  .
 popd
+
+rm -rf $WORKSPACE/nvshmem_src
