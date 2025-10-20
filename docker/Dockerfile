@@ -290,6 +290,7 @@ RUN PYTHON_VERSION_STR=$(echo ${PYTHON_VERSION} | sed 's/\.//g') && \
 RUN echo 'tzdata tzdata/Areas select America' | debconf-set-selections \
     && echo 'tzdata tzdata/Zones/America select Los_Angeles' | debconf-set-selections \
     && apt-get update -y \
+    && apt-get -y --no-install-recommends dist-upgrade \
     && apt-get install -y ccache software-properties-common git curl wget sudo vim python3-pip \
     && apt-get install -y ffmpeg libsm6 libxext6 libgl1 \
     && if [ ! -z ${DEADSNAKES_MIRROR_URL} ] ; then \
@@ -538,6 +539,9 @@ RUN chmod +x sagemaker-entrypoint.sh
 ENTRYPOINT ["./sagemaker-entrypoint.sh"]
 
 FROM vllm-openai-base AS vllm-openai
+
+# Uninstall ray
+RUN pip uninstall -y ray || true
 
 ENTRYPOINT ["python3", "-m", "vllm.entrypoints.openai.api_server"]
 #################### OPENAI API SERVER ####################
