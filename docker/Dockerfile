@@ -543,5 +543,41 @@ FROM vllm-openai-base AS vllm-openai
 # Uninstall ray
 RUN pip uninstall -y ray || true
 
+# Uninstall unsecure libs
+RUN apt-get update && \
+    apt-get purge -y \
+    binutils \
+    binutils-common \
+    binutils-x86-64-linux-gnu \
+    ffmpeg \
+    git \
+    git-man \
+    libavcodec58 \
+    libavfilter7 \
+    libavformat58 \
+    libavutil56 \
+    libbinutils \
+    libctf-nobfd0 \
+    libctf0 \
+    libmfx1 \
+    libopenjp2-7 \
+    pip \
+    wget \
+    python3-jwt \
+    python3-pip \
+    libpixman-1-0 \
+    libpostproc55 \
+    libsndfile1 \
+    libswresample3 \
+    libswscale5 \
+    libzvbi-common \
+    libzvbi0 \
+    linux-libc-dev || true && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Forcefully remove PAM and tar-related libraries (dangerous: breaks login/auth tools)
+RUN dpkg --force-all -r libpam0g libpam-modules libpam-modules-bin libpam-runtime || true
+
 ENTRYPOINT ["python3", "-m", "vllm.entrypoints.openai.api_server"]
 #################### OPENAI API SERVER ####################
